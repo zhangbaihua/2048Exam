@@ -2,12 +2,15 @@ package edu.msu.zhangba5.a2048exam;
 
 
 import android.content.Context;
+
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
 
 public class GameView extends GridLayout {
+
+
     public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initGameView();
@@ -24,6 +27,7 @@ public class GameView extends GridLayout {
     }
 
     private void initGameView(){
+        setColumnCount(4);
         setOnTouchListener(new View.OnTouchListener(){
             private float startX,startY,offsetX,offsetY;
             @Override
@@ -71,5 +75,27 @@ public class GameView extends GridLayout {
     }
     private void swipeDown(){
 
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        int cardWidth = (Math.min(w,h) - 10)/4;
+
+        addCard(cardWidth,cardWidth);
+
+
+    }
+
+    private void addCard(int cardWidth, int cardHeight){
+        Card card;
+        for(int y = 0; y < 4;y++){
+            for(int n = 0; n < 4;n++){
+                card = new Card(getContext());
+                card.setNum(2);
+                addView(card,cardWidth,cardHeight);
+            }
+        }
     }
 }
